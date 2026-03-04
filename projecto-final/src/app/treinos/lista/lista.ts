@@ -4,7 +4,7 @@ import { Treino } from '../../shared/models/treino.model';
 
 @Component({
   selector: 'app-lista',
-  imports: [],
+  standalone: true,
   templateUrl: './lista.html',
   styleUrl: './lista.css',
 })

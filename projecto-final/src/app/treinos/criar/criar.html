@@ -1,0 +1,40 @@
+<form [formGroup]="form">
+  <input formControlName="nome" type="text" placeholder="Nome" />
+  @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+    <p>O nome é obrigatório, com 3 caracteres</p>
+  }
+
+  <input formControlName="data" type="date" placeholder="Data" />
+  @if (form.get('data')?.invalid && form.get('data')?.touched) {
+    <p>A data é obrigatória</p>
+  }
+
+  <select formControlName="tipo">
+    <option value="">Escolher tipo</option>
+    @for (t of tipos; track t) {
+      <option [value]="t">{{ t }}</option>
+    }
+  </select>
+
+  @if (form.get('tipo')?.invalid && form.get('tipo')?.touched) {
+    <p>O tipo de treino é obrigatório</p>
+  }
+
+  <select formControlName="exercicio" [disabled="!form.get('tipo')?.value"]>
+    <option value="">Escolher exercício</option>
+
+    @for (t of tipos; track t) {
+      @if (t.nome === form.get('tipo')?.value) {
+        @for (e of t.exercicios; track e) {
+          <option [value]="e">{{ e }}</option>
+        }
+      }
+    }
+  </select>
+
+  @if (form.get('exercicio')?.invalid && form.get('exercicio')?.touched) {
+    <p>O exercício é obrigatório</p>
+  }
+
+  <button type="submit" (click)="criar()" [disabled]="!form.get('tipo')?.value">Inserir</button>
+</form>

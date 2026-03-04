@@ -13,14 +13,14 @@ export class TreinosStore {
       tipo: 'Treino 1',
       data: new Date().toISOString().split('T')[0],
     },
-    { id: 2, nome: 'Pernas-1', tipo: 'Treino 2', data: new Date().toISOString().split('T')[0] },
+    { id: 2, nome: 'Pernas', tipo: 'Treino 2', data: new Date().toISOString().split('T')[0] },
     {
       id: 3,
       nome: 'Ombros e Braços',
       tipo: 'Treino 3',
       data: new Date().toISOString().split('T')[0],
     },
-    { id: 4, nome: 'Pernas-2', tipo: 'Treino 2', data: new Date().toLocaleDateString('pt-PT') },
+    { id: 4, nome: 'Pernas c/Squats', tipo: 'Treino 4', data: new Date().toLocaleDateString('pt-PT') },
   ];
 
   getTreinos(): Treino[] {
