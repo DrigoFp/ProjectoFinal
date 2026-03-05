@@ -20,7 +20,7 @@
     <p>O tipo de treino é obrigatório</p>
   }
 
-  <select formControlName="exercicio" [disabled="!form.get('tipo')?.value"]>
+  <select formControlName="exercicio" [disabled]="!form.get('tipo')?.value">
     <option value="">Escolher exercício</option>
 
     @for (t of tipos; track t) {

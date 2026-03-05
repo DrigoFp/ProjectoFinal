@@ -3,4 +3,9 @@ export interface Treino {
   nome: string;
   tipo: string;
   data: string;
+  exercicios: {
+    nome: string;
+    repeticoes: number;
+    peso: number;
+  }[];
 }

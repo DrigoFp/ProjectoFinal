@@ -1,0 +1,10 @@
+<h2>Editar Treino</h2>
+
+@if (treino) {
+  <p><strong>ID:</strong> {{ treino.id }}</p>
+  <p><strong>Nome:</strong> {{ treino.nome }}</p>
+  <p><strong>Tipo:</strong> {{ treino.tipo }}</p>
+  <p><strong>Data:</strong> {{ treino.data }}</p>
+} @else {
+  <p>Treino não encontrado.</p>
+}

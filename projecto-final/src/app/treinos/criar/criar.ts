@@ -9,41 +9,7 @@ import { TreinosStore } from '../treinos-store';
   styleUrl: './criar.css',
 })
 export class Criar {
-  tipos = [
-    {
-      nome: 'Peito e Costas',
-      exercicios: [
-        '1- Pac Deck - SUPERSET',
-        '2- Incline Press',
-        '1- Nautilus Pullover - SUPERSERT',
-        '2- The Close Grip Palms Up PullDown',
-        '3- Deadlift',
-      ],
-    },
-    {
-      nome: 'Pernas',
-      exercicios: [
-        '1- Leg Extension - SUPERSET',
-        '2- Leg Press',
-        '3- Leg Curls',
-        '4- Gemeos + Estáticos',
-      ],
-    },
-    {
-      nome: 'Ombros, Bicep e Tricep',
-      exercicios: [
-        '1- Ombros Lateral',
-        '2- Ombros Posterior',
-        '3- Bicep Straight Barbell Curl',
-        '4- Tricep com barra - Superset',
-        'Dips',
-      ],
-    },
-    {
-      nome: 'Pernas c/Suqats',
-      exercicios: ['1- Leg Extension Estaticos - Superset', '2- Squats', 'Hip thrust', 'Gémeos'],
-    },
-  ];
+
   form = new FormGroup({
     nome: new FormControl('', {
       nonNullable: true,
