@@ -8,27 +8,51 @@ import { TreinosStore } from '../treinos/treinos-store';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-
 export class Dashboard {
   dataDeHoje: string = new Date().toLocaleDateString('pt-PT');
-  name: string = 'Rodrigo';
+  name: string = 'Raquel Machado ❤️';
   treinos: any[] = [];
   totalTreinos: number = 0;
   ultimoTreino: any = null;
-  mostrarEstatisticas: boolean = false;
+
+  // 🔥 VARIÁVEIS CORRETAS
+  estatisticasVisiveis: boolean = false;
+  estatisticas: any = null;
 
   constructor(private treinosStore: TreinosStore) {}
 
   ngOnInit() {
-    //serve para correr código quando o componente inicia
     this.treinos = this.treinosStore.getTreinos();
     this.totalTreinos = this.treinos.length;
+
     if (this.treinos.length > 0) {
-      this.ultimoTreino = this.treinos[this.treinos.length - 1]; // Se existir pelo menos um treino na lista, então guarda na variável ultimoTreino o último treino dessa lista
+      this.ultimoTreino = this.treinos[this.treinos.length - 1];
     }
   }
 
-  botaoCarregarEstatisticas() {
-    this.mostrarEstatisticas = !this.mostrarEstatisticas;
+  // 🔥 MÉTODO CORRETO PARA MOSTRAR/ESCONDER ESTATÍSTICAS
+  mostrarEstatisticas() {
+    this.estatisticas = this.calcularEstatisticas();
+    this.estatisticasVisiveis = !this.estatisticasVisiveis;
+  }
+
+  // 🔥 MÉTODO QUE CALCULA AS ESTATÍSTICAS
+  calcularEstatisticas() {
+    return this.treinos.reduce(
+      (acc, treino) => {
+        acc.maxPeso = Math.max(acc.maxPeso, treino.peso);
+        acc.minPeso = Math.min(acc.minPeso, treino.peso);
+        acc.maxReps = Math.max(acc.maxReps, treino.repeticoes);
+        acc.minReps = Math.min(acc.minReps, treino.repeticoes);
+
+        return acc;
+      },
+      {
+        maxPeso: -Infinity,
+        minPeso: Infinity,
+        maxReps: -Infinity,
+        minReps: Infinity,
+      },
+    );
   }
 }

@@ -16,13 +16,34 @@
 <div class="atalhos">
   <div class="atalho-card">Estatísticas</div>
 </div>
-<div class="atalho-card" (click)="botaoCarregarEstatisticas()">
+<div class="atalho-card" (click)="mostrarEstatisticas()">
   Estatísticas
 </div>
 
+@if (estatisticasVisiveis) {
+  <div class="card-estatisticas">
+    <h3>Estatísticas do Treino</h3>
 
-    @if (mostrarEstatisticas){
-<div></div>
+    <div class="linha">
+      <span>Peso máximo:</span>
+      <strong>{{ estatisticas.maxPeso }} kg</strong>
+    </div>
 
+    <div class="linha">
+      <span>Peso mínimo:</span>
+      <strong>{{ estatisticas.minPeso }} kg</strong>
+    </div>
 
-    }
+    <div class="linha">
+      <span>Reps máximas:</span>
+      <strong>{{ estatisticas.maxReps }}</strong>
+    </div>
+
+    <div class="linha">
+      <span>Reps mínimas:</span>
+      <strong>{{ estatisticas.minReps }}</strong>
+    </div>
+  </div>
+}
+
+<button (click)="mostrarEstatisticas()">Mostrar estatísticas</button>

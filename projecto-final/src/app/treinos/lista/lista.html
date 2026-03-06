@@ -15,7 +15,7 @@
       <footer>
         <button [routerLink]="['/treinos/editar', t.id]">Editar</button>
         <button routerLink="/lista" class="voltar">Voltar</button>
-        <button (click)="(apagarTreino)">Apagar</button>
+        <button (click)="apagarTreino(t.id)">Apagar 🗑️</button>
       </footer>
     </div>
   }

@@ -1,0 +1,8 @@
+section {
+  margin-top: 60px;
+  padding-bottom: 40px;
+}
+.conteudo {
+  margin-top: 80px; /* empurra todas as páginas para baixo */
+  padding-bottom: 10px; /* opcional: espaço antes do footer */
+}

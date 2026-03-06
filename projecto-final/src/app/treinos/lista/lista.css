@@ -138,3 +138,21 @@ section {
   flex-direction: column;
   gap: 20px;
 }
+section {
+  margin-top: 500px;
+}
+section {
+  background: #111;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px;
+  box-shadow: 0 0 10px rgba(0,255,0,0.1);
+}
+
+.card {
+  background: #000;
+  border: 1px solid #0f0;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
