@@ -1,3 +1,28 @@
 <h1>Dashboard</h1>
 <h2>{{ name | saudacao }}</h2>
 <p>Treinos</p>
+
+<div class="card">
+    <h3>Último Treino</h3>
+
+    <p> <strong>{{ ultimoTreino?.nome }}</strong></p>
+    <p>{{ ultimoTreino.data }}</p>
+</div>
+
+<div class="card">
+    <p><strong>{{ totalTreinos }}</strong> Treinos no total</p>
+</div>
+
+<div class="atalhos">
+  <div class="atalho-card">Estatísticas</div>
+</div>
+<div class="atalho-card" (click)="botaoCarregarEstatisticas()">
+  Estatísticas
+</div>
+
+
+    @if (mostrarEstatisticas){
+<div></div>
+
+
+    }
