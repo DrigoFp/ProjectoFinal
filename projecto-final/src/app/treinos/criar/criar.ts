@@ -9,7 +9,6 @@ import { TreinosStore } from '../treinos-store';
   styleUrl: './criar.css',
 })
 export class Criar {
-
   form = new FormGroup({
     nome: new FormControl('', {
       nonNullable: true,
@@ -17,13 +16,12 @@ export class Criar {
     }),
     data: new FormControl('', [Validators.required]),
     tipo: new FormControl('', [Validators.required]),
-    exercicios: new FormControl('', [Validators.required]),
   });
 
-  constructor(private treinosStore: TreinosStore) {
-    this.form.get('tipo')?.valueChanges.subscribe(() => {
-      this.form.get('exercicio')?.reset('');
-    });
+  constructor(private treinosStore: TreinosStore) {}
+  
+  get tipos() {
+    return this.treinosStore.tipos;
   }
 
   criar() {
@@ -31,13 +29,6 @@ export class Criar {
 
     this.treinosStore.addTreino(this.form.value as any);
     this.form.reset();
-
-    const treino = {
-      nome: this.form.value.nome ?? '',
-      data: this.form.value.data ?? '',
-      tipo: this.form.value.tipo ?? '',
-      exercicio: this.form.value.exercicios ?? '',
-    };
   }
 
   campoInvalido(campo: string) {

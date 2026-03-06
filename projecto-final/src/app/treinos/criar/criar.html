@@ -1,40 +1,58 @@
-<form [formGroup]="form">
-  <input formControlName="nome" type="text" placeholder="Nome" />
-  @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
-    <p>O nome é obrigatório, com 3 caracteres</p>
-  }
+<div class="page-container">
 
-  <input formControlName="data" type="date" placeholder="Data" />
-  @if (form.get('data')?.invalid && form.get('data')?.touched) {
-    <p>A data é obrigatória</p>
-  }
+  <h2>Criar Treino</h2>
+  <p>Preenche os dados para adicionar um novo treino.</p>
 
-  <select formControlName="tipo">
-    <option value="">Escolher tipo</option>
-    @for (t of tipos; track t) {
-      <option [value]="t">{{ t }}</option>
+  <form [formGroup]="form">
+
+    <!-- Nome -->
+    <label for="nome">Nome do treino</label>
+    <input id="nome" formControlName="nome" type="text" placeholder="Nome" />
+    @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+      <p class="erro">O nome é obrigatório, com 3 caracteres</p>
     }
-  </select>
 
-  @if (form.get('tipo')?.invalid && form.get('tipo')?.touched) {
-    <p>O tipo de treino é obrigatório</p>
-  }
+    <!-- Data -->
+    <label for="data">Data</label>
+    <input id="data" formControlName="data" type="date" placeholder="Data" />
+    @if (form.get('data')?.invalid && form.get('data')?.touched) {
+      <p class="erro">A data é obrigatória</p>
+    }
 
-  <select formControlName="exercicio" [disabled]="!form.get('tipo')?.value">
-    <option value="">Escolher exercício</option>
+    <!-- Tipo -->
+    <label for="tipo">Tipo de treino</label>
+    <select id="tipo" formControlName="tipo">
+      <option value="">Escolher tipo</option>
+      @for (t of tipos; track t) {
+        <option [value]="t.nome">{{ t.nome }}</option>
+      }
+    </select>
+    @if (form.get('tipo')?.invalid && form.get('tipo')?.touched) {
+      <p class="erro">O tipo de treino é obrigatório</p>
+    }
 
-    @for (t of tipos; track t) {
-      @if (t.nome === form.get('tipo')?.value) {
-        @for (e of t.exercicios; track e) {
-          <option [value]="e">{{ e }}</option>
+    <!-- Exercício -->
+    <label for="exercicio">Exercício</label>
+    <select id="exercicio" formControlName="exercicio" [disabled]="!form.get('tipo')?.value">
+      <option value="">Escolher exercício</option>
+
+      @for (t of tipos; track t) {
+        @if (t.nome === form.get('tipo')?.value) {
+          @for (e of t.exercicios; track e) {
+            <option [value]="e">{{ e }}</option>
+          }
         }
       }
+    </select>
+    @if (form.get('exercicio')?.invalid && form.get('exercicio')?.touched) {
+      <p class="erro">O exercício é obrigatório</p>
     }
-  </select>
 
-  @if (form.get('exercicio')?.invalid && form.get('exercicio')?.touched) {
-    <p>O exercício é obrigatório</p>
-  }
+    <!-- Botão -->
+    <button type="submit" (click)="criar()" [disabled]="!form.valid">
+      Inserir
+    </button>
 
-  <button type="submit" (click)="criar()" [disabled]="!form.get('tipo')?.value">Inserir</button>
-</form>
+  </form>
+
+</div>

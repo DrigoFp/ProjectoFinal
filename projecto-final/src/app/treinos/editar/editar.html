@@ -1,10 +1,31 @@
 <h2>Editar Treino</h2>
 
 @if (treino) {
+
   <p><strong>ID:</strong> {{ treino.id }}</p>
   <p><strong>Nome:</strong> {{ treino.nome }}</p>
   <p><strong>Tipo:</strong> {{ treino.tipo }}</p>
-  <p><strong>Data:</strong> {{ treino.data }}</p>
+
+  <label>Data:</label>
+  <input type="date" [(ngModel)]="treino.data" />
+  <button (click)="guardarData()">Guardar Data</button>
+
+  <h3>Exercícios</h3>
+
+  @for (ex of treino.exercicios; track $index) {
+    <div class="exercicio-box">
+      <p><strong>{{ ex.nome }}</strong></p>
+
+      <label>Repetições:</label>
+      <input type="number" [(ngModel)]="ex.repeticoes" />
+
+      <label>Peso:</label>
+      <input type="number" [(ngModel)]="ex.peso" />
+
+      <button (click)="guardarExercicio(ex.id)">Guardar</button>
+    </div>
+  }
+
 } @else {
   <p>Treino não encontrado.</p>
 }

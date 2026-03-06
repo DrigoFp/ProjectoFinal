@@ -4,6 +4,7 @@ export interface Treino {
   tipo: string;
   data: string;
   exercicios: {
+    id: number,
     nome: string;
     repeticoes: number;
     peso: number;

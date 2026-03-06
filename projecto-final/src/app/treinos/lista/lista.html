@@ -1,7 +1,21 @@
-@for (treino of treinos; track treino.id) {
-  <div class="treino-card">
-    <h3>{{ treino.nome }}</h3>
-    <p>Data: {{ treino.data }}</p>
-    <p>Tipo: {{ treino.tipo }}</p>
-  </div>
-}
+<h2>Lista de Treinos</h2>
+<p>Digita os teus novos treinos aqui!</p>
+
+<button routerLink="/criar">Criar novo treino</button>
+
+<section>
+  @for (t of treinos; track t.id) {
+    <div class="card">
+      <header>
+        <h3>{{ t.nome }}</h3>
+      </header>
+      <p><strong>Tipo:</strong> {{ t.tipo }}</p>
+      <p><strong>Data:</strong> {{ t.data }}</p>
+
+      <footer>
+      <button routerLink="/editar/{{ t.id }}">Editar</button>
+      <button (click)="(apagarTreino)">Apagar</button>
+      </footer>
+    </div>
+  }
+</section>

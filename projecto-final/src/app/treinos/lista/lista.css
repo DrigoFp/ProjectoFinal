@@ -1,0 +1,140 @@
+h2 {
+  margin-bottom: 5px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+section {
+  margin-top: 20px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.card header {
+  margin-bottom: 10px;
+}
+
+.card .info p {
+  margin: 4px 0;
+}
+
+.card footer {
+  margin-top: 10px;
+}
+
+.card footer button {
+  margin-right: 10px;
+}
+.card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.card header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.card footer {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  margin-top: 12px;
+}
+.card footer button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.card footer button:hover {
+  background-color: #0056b3;
+}
+
+.card footer button:last-child {
+  background-color: #dc3545;
+}
+
+.card footer button:last-child:hover {
+  background-color: #b02a37;
+}
+.card .info p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+/* Contém toda a página */
+.page-container {
+  max-width: 800px;
+  margin: 0 auto; /* centra a página */
+  padding: 20px;
+}
+
+/* Espaçamento entre título e botão */
+h2 {
+  margin-bottom: 5px;
+}
+
+.page-container > p {
+  margin-bottom: 20px;
+}
+
+/* Botão Criar */
+.page-container > button {
+  margin-bottom: 20px;
+}
+
+/* Secção dos cartões */
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* espaço entre cartões */
+}
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+h2 {
+  margin-bottom: 5px;
+}
+
+.page-container > p {
+  margin-bottom: 20px;
+}
+
+.page-container > button {
+  margin-bottom: 20px;
+}
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

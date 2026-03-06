@@ -1,9 +1,76 @@
-input.ng-invalid.ng-touched,
-select.ng-invalid.ng-touched {
-  border: 2px solid red;
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Título e descrição */
+h2 {
+  margin-bottom: 5px;
+}
+
+.page-container > p {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* Formulário */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Labels */
+label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* Inputs e selects */
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  background-color: #fff;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}
+
+/* Mensagens de erro */
+.erro {
+  color: #d9534f;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+
+/* Botão */
+button {
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 button:disabled {
-  opacity: 0.5;
+  background-color: #999;
   cursor: not-allowed;
 }
