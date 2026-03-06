@@ -1,4 +1,12 @@
+<div class="page-container">
+
 <h2>Editar Treino</h2>
+
+@if (mensagem) {
+  <div class="mensagem-sucesso">
+    {{ mensagem }}
+  </div>
+}
 
 @if (treino) {
 
@@ -29,3 +37,4 @@
 } @else {
   <p>Treino não encontrado.</p>
 }
+</div>

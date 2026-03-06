@@ -63,34 +63,8 @@ export class TreinosStore {
     return this.treinos.find((t) => t.id === id);
   }
 
-  addTreino(novoTreino: Omit<Treino, 'id' | 'exercicios'>) {
-    const id = this.getNextId();
-
-    // 1. Encontrar o tipo no catálogo
-    const tipoEscolhido = this.tipos.find((t) => t.nome === novoTreino.tipo);
-
-    // 2. Se não existir, não cria treino
-    if (!tipoEscolhido) return;
-
-    // 3. Copiar os exercícios do tipo e preparar para edição
-    const exerciciosPreparados = tipoEscolhido.exercicios.map((nomeExercicio) => ({
-      nome: nomeExercicio,
-      id: this.getIdExercicio(id),
-      repeticoes: 0,
-      peso: 0,
-    }));
-
-    // 4. Criar treino completo
-    const treinoCompleto: Treino = {
-      id,
-      nome: novoTreino.nome,
-      tipo: novoTreino.tipo,
-      data: novoTreino.data,
-      exercicios: exerciciosPreparados,
-    };
-
-    // 5. Guardar no array
-    this.treinos.push(treinoCompleto);
+  addTreino(novoTreino: Treino) {
+    this.treinos.push(novoTreino);
   }
 
   updateData(id: number, novaData: string) {
@@ -101,29 +75,24 @@ export class TreinosStore {
   }
 
   actualizarTreino(id: number, idExercicio: number, alteracoesExercicio: ActualizarExercicio) {
-    const actualizar = this.treinos.find((t) => t.id === id);
-    if (!actualizar) {
-      return;
-    }
+  const treino = this.treinos.find(t => t.id === id);
+  if (!treino) return;
 
-    let exercicioActualizar = actualizar.exercicios.find((t) => t.id === idExercicio);
+  const index = treino.exercicios.findIndex(e => e.id === idExercicio);
+  if (index === -1) return;
 
-    if (!exercicioActualizar) {
-      return;
-    }
-    exercicioActualizar = { ...exercicioActualizar, ...alteracoesExercicio };
-  }
+  treino.exercicios[index] = {
+    ...treino.exercicios[index],
+    ...alteracoesExercicio
+  };
+}
 
   deleteTreino(id: number) {
     this.treinos = this.treinos.filter((t) => t.id !== id);
   }
 
-  private getNextId(): number {
+  getNextId(): number {
     return this.treinos.length > 0 ? Math.max(...this.treinos.map((t) => t.id)) + 1 : 1;
   }
 
-  private getIdExercicio(id: number): number {
-    const treino = this.treinos.find((t) => t.id);
-    return treino!.exercicios.length > 0 ? Math.max(...treino!.exercicios.map((t) => t.id)) + 1 : 1;
-  }
 }

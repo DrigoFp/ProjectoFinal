@@ -1,17 +1,8 @@
 <div class="page-container">
-
   <h2>Criar Treino</h2>
   <p>Preenche os dados para adicionar um novo treino.</p>
 
   <form [formGroup]="form">
-
-    <!-- Nome -->
-    <label for="nome">Nome do treino</label>
-    <input id="nome" formControlName="nome" type="text" placeholder="Nome" />
-    @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
-      <p class="erro">O nome é obrigatório, com 3 caracteres</p>
-    }
-
     <!-- Data -->
     <label for="data">Data</label>
     <input id="data" formControlName="data" type="date" placeholder="Data" />
@@ -21,19 +12,21 @@
 
     <!-- Tipo -->
     <label for="tipo">Tipo de treino</label>
-    <select id="tipo" formControlName="tipo">
+    <select id="tipo" formControlName="tipo" (change)="onTipoChange()">
       <option value="">Escolher tipo</option>
       @for (t of tipos; track t) {
         <option [value]="t.nome">{{ t.nome }}</option>
       }
     </select>
-    @if (form.get('tipo')?.invalid && form.get('tipo')?.touched) {
-      <p class="erro">O tipo de treino é obrigatório</p>
-    }
 
     <!-- Exercício -->
     <label for="exercicio">Exercício</label>
-    <select id="exercicio" formControlName="exercicio" [disabled]="!form.get('tipo')?.value">
+    <select id="exercicio"
+            [(ngModel)]="exercicioSelecionado"
+            [ngModelOptions]="{standalone: true}"
+            (change)="onExercicioChange()"
+            [disabled]="!form.get('tipo')?.value">
+
       <option value="">Escolher exercício</option>
 
       @for (t of tipos; track t) {
@@ -44,15 +37,26 @@
         }
       }
     </select>
-    @if (form.get('exercicio')?.invalid && form.get('exercicio')?.touched) {
-      <p class="erro">O exercício é obrigatório</p>
-    }
+
+    <!-- Carga e Repetições -->
+    <div *ngIf="exercicioSelecionado">
+      <h3>Detalhes do Exercício</h3>
+
+      <label>Peso:</label>
+      <input type="number"
+             [(ngModel)]="carga"
+             [ngModelOptions]="{standalone: true}" />
+
+      <label>Repetições:</label>
+      <input type="number"
+             [(ngModel)]="repeticoes"
+             [ngModelOptions]="{standalone: true}" />
+    </div>
 
     <!-- Botão -->
-    <button type="submit" (click)="criar()" [disabled]="!form.valid">
+    <button type="submit" (click)="criar()" [disabled]="!form.valid || !exercicioSelecionado">
       Inserir
     </button>
 
   </form>
-
 </div>

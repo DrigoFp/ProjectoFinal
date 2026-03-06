@@ -13,8 +13,9 @@
       <p><strong>Data:</strong> {{ t.data }}</p>
 
       <footer>
-      <button routerLink="/editar/{{ t.id }}">Editar</button>
-      <button (click)="(apagarTreino)">Apagar</button>
+        <button [routerLink]="['/treinos/editar', t.id]">Editar</button>
+        <button routerLink="/lista" class="voltar">Voltar</button>
+        <button (click)="(apagarTreino)">Apagar</button>
       </footer>
     </div>
   }

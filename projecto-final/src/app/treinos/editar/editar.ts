@@ -13,12 +13,21 @@ import { FormsModule } from '@angular/forms';
 })
 export class Editar implements OnInit {
   treino!: Treino | undefined;
+  mensagem: string = '';
 
   constructor(
     private route: ActivatedRoute,
-    private treinosStore: TreinosStore
+    private treinosStore: TreinosStore,
   ) {}
 
+ mostrarMensagem(texto: string) {
+    this.mensagem = texto;
+
+    setTimeout(() => {
+      this.mensagem = '';
+    }, 2500);
+  }
+  
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.treino = this.treinosStore.getTreinoById(id);
@@ -27,21 +36,21 @@ export class Editar implements OnInit {
   guardarData() {
     if (!this.treino) return;
     this.treinosStore.updateData(this.treino.id, this.treino.data);
+    this.mostrarMensagem('Data atualizada com sucesso');
   }
-
+  
   guardarExercicio(idExercicio: number) {
     if (!this.treino) return;
 
-    const ex = this.treino.exercicios.find(e => e.id === idExercicio);
+    const ex = this.treino.exercicios.find((e) => e.id === idExercicio);
     if (!ex) return;
 
-    this.treinosStore.actualizarTreino(
-      this.treino.id,
-      idExercicio,
-      {
-        repeticoes: ex.repeticoes,
-        peso: ex.peso
-      }
-    );
+    this.treinosStore.actualizarTreino(this.treino.id, idExercicio, {
+      repeticoes: ex.repeticoes,
+      peso: ex.peso,
+    });
+
+    this.mostrarMensagem('Exercício guardado');
   }
+
 }
