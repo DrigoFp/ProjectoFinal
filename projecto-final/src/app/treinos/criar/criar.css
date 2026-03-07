@@ -1,8 +1,11 @@
 /* ======== CONTAINER ======== */
 .page-container {
   max-width: 800px;
+  width: 100%;
   margin: 0 auto;
   padding: 20px;
+  box-sizing: border-box;
+  overflow-x: hidden; /* impede rebentamento horizontal */
 }
 
 /* ======== TÍTULOS ======== */
@@ -21,6 +24,8 @@ form {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Labels */
@@ -35,12 +40,14 @@ label {
 input,
 select {
   width: 100%;
+  max-width: 100%;
   padding: 10px;
   border: 1px solid #333;
   border-radius: 6px;
   font-size: 15px;
   background-color: #111;
   color: rgb(24, 164, 201);
+  box-sizing: border-box;
 }
 
 input:focus,
@@ -68,6 +75,8 @@ button {
   font-size: 16px;
   cursor: pointer;
   margin-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 button:hover {
@@ -79,8 +88,10 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* ======== LISTA DE TREINOS CRIADOS ======== */
+/* ======== LISTA DE TREINOS ======== */
 section {
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -92,6 +103,8 @@ section {
 
 /* ======== CARD ======== */
 .card {
+  width: 100%;
+  box-sizing: border-box;
   background: #000;
   border: 1px solid #2a2a2a;
   padding: 16px;
@@ -115,11 +128,14 @@ section {
   padding-top: 10px;
   margin-top: 12px;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
-/* Botões dentro do card */
 .card footer button {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
   background-color: #007bff;
   color: #fff !important;
   border: none;
@@ -129,14 +145,29 @@ section {
   font-weight: 600;
 }
 
-.card footer button:hover {
-  background-color: #0056b3;
-}
-
 .card footer button:last-child {
   background-color: #dc3545;
 }
 
 .card footer button:last-child:hover {
   background-color: #b02a37;
+}
+
+/* ======== TELEMÓVEL ======== */
+@media (max-width: 480px) {
+  .page-container {
+    padding: 10px;
+  }
+
+  section {
+    padding: 15px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .card footer {
+    flex-direction: column;
+  }
 }
