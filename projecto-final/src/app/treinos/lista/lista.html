@@ -2,7 +2,6 @@
 
   <header class="top-bar">
     <h2>Lista de Treinos</h2>
-    <button routerLink="/criar" class="btn-criar">+ Criar novo treino</button>
   </header>
 
   <!-- Estatísticas -->
@@ -22,11 +21,12 @@
     }
   </section>
 
-  <!-- Filtros -->
+  <!-- Filtro -->
   <section class="filtros">
     <label>Filtrar por tipo:</label>
 
-    <select (change)="onFiltroChange($event)">
+    <select class="btn btn-primary filtro-select"
+            (change)="onFiltroChange($event)">
       <option value="">Todos</option>
 
       @for (t of tipos; track t.nome) {
@@ -48,8 +48,15 @@
         <p><strong>Data:</strong> {{ t.data }}</p>
 
         <footer>
-          <button [routerLink]="['/treinos/editar', t.id]">Editar</button>
-          <button (click)="apagarTreino(t.id)" class="apagar">Apagar 🗑️</button>
+          <button class="btn btn-primary"
+                  [routerLink]="['/treinos/editar', t.id]">
+            Editar
+          </button>
+
+          <button class="btn btn-danger"
+                  (click)="apagarTreino(t.id)">
+            Apagar 🗑️
+          </button>
         </footer>
       </div>
     }
