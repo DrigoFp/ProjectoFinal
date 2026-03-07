@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TreinosStore } from '../treinos-store';
 import { Treino } from '../../shared/models/treino.model';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-lista',
@@ -14,7 +14,9 @@ export class Lista implements OnInit {
   treinos: Treino[] = [];
   filtroTipo: string = '';
 
-  constructor(public treinosStore: TreinosStore) {}
+  constructor(public treinosStore: TreinosStore,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.treinosStore.treinos$.subscribe((t) => {
@@ -55,4 +57,8 @@ export class Lista implements OnInit {
   apagarTreino(id: number) {
     this.treinosStore.deleteTreino(id);
   }
+  verDetalhe(id: number) {
+  this.router.navigate(['/treinos', id]);
+}
+
 }

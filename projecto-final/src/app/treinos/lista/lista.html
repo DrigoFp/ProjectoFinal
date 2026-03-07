@@ -39,7 +39,7 @@
   <section class="lista">
 
     @for (t of treinosFiltrados; track t.id) {
-      <div class="card">
+      <div class="card" (click)="verDetalhe(t.id)">
         <header>
           <h3>{{ t.nome }}</h3>
         </header>
@@ -49,12 +49,13 @@
 
         <footer>
           <button class="btn btn-primary"
-                  [routerLink]="['/treinos/editar', t.id]">
+                  [routerLink]="['/treinos/editar', t.id]"
+                  (click)="$event.stopPropagation()">
             Editar
           </button>
 
           <button class="btn btn-danger"
-                  (click)="apagarTreino(t.id)">
+                  (click)="apagarTreino(t.id); $event.stopPropagation()">
             Apagar 🗑️
           </button>
         </footer>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Treino } from '../shared/models/treino.model';
-import { TreinosStorageService } from '../shared/services/treinos-storage.service';
+import { TreinosStorageService } from '../shared/services/treinos-storage.service'; 
 
 type ActualizarExercicio = {
   id?: number;

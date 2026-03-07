@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TreinosStorage } from './treinos-storage';
+import { TreinosStorage } from './treinos-storage.service';
 
 describe('TreinosStorage', () => {
   let service: TreinosStorage;

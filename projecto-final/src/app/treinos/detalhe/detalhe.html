@@ -1,0 +1,20 @@
+<div class="detalhe-container">
+
+  <h1>{{ treino.nome }}</h1>
+  <p class="data">Data: {{ treino.data }}</p>
+  <p class="tipo">Tipo: {{ treino.tipo }}</p>
+
+  <h2>Exercícios</h2>
+
+  <div class="exercicio" *ngFor="let ex of treino.exercicios">
+    <h3>{{ ex.nome }}</h3>
+    <p>Peso: {{ ex.peso }} kg</p>
+    <p>Repetições: {{ ex.repeticoes }}</p>
+  </div>
+
+  <div class="acoes">
+    <button (click)="editar()">Editar</button>
+    <button class="apagar" (click)="apagar()">Apagar</button>
+  </div>
+
+</div>
