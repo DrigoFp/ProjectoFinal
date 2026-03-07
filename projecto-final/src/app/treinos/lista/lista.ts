@@ -8,17 +8,51 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   templateUrl: './lista.html',
   styleUrl: './lista.css',
-  imports: [RouterModule]
+  imports: [RouterModule],
 })
-export class Lista implements OnInit{ 
+export class Lista implements OnInit {
   treinos: Treino[] = [];
-  constructor (private treinosStore: TreinosStore){}
+  filtroTipo: string = '';
+
+  constructor(public treinosStore: TreinosStore) {}
 
   ngOnInit(): void {
-    this.treinos = this.treinosStore.getTreinos();
+    this.treinosStore.treinos$.subscribe((t) => {
+      this.treinos = this.ordenarPorData(t);
+    });
   }
-   apagarTreino(id: number) { this.treinosStore.deleteTreino(id); this.treinos = this.treinosStore.getTreinos(); 
-    
-   }
 
+  ordenarPorData(treinos: Treino[]): Treino[] {
+    return [...treinos].sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
+  }
+
+  get tipos() {
+    return this.treinosStore.tipos;
+  }
+
+  onFiltroChange(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    this.filtroTipo = select.value;
+  }
+
+  get treinosFiltrados(): Treino[] {
+    if (!this.filtroTipo) return this.treinos;
+    return this.treinos.filter((t) => t.tipo === this.filtroTipo);
+  }
+
+  get totalTreinos(): number {
+    return this.treinos.length;
+  }
+
+  get totalExercicios(): number {
+    return this.treinos.reduce((acc, t) => acc + t.exercicios.length, 0);
+  }
+
+  get ultimoTreino(): Treino | null {
+    return this.treinos.length > 0 ? this.treinos[0] : null;
+  }
+
+  apagarTreino(id: number) {
+    this.treinosStore.deleteTreino(id);
+  }
 }

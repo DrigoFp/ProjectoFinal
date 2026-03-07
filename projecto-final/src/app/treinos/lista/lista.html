@@ -1,23 +1,62 @@
 <div class="page-container">
-  <h2>Lista de Treinos</h2>
-  <p>Digita os teus novos treinos aqui!</p>
-  <button routerLink="/criar">Criar novo treino</button>
-</div>
 
-<section>
-  @for (t of treinos; track t.id) {
-    <div class="card">
-      <header>
-        <h3>{{ t.nome }}</h3>
-      </header>
-      <p><strong>Tipo:</strong> {{ t.tipo }}</p>
-      <p><strong>Data:</strong> {{ t.data }}</p>
+  <header class="top-bar">
+    <h2>Lista de Treinos</h2>
+    <button routerLink="/criar" class="btn-criar">+ Criar novo treino</button>
+  </header>
 
-      <footer>
-        <button [routerLink]="['/treinos/editar', t.id]">Editar</button>
-        <button routerLink="/lista" class="voltar">Voltar</button>
-        <button (click)="apagarTreino(t.id)">Apagar 🗑️</button>
-      </footer>
+  <!-- Estatísticas -->
+  <section class="stats">
+    <div class="stat">
+      <strong>Total de treinos:</strong> {{ totalTreinos }}
     </div>
-  }
-</section>
+
+    <div class="stat">
+      <strong>Total de exercícios:</strong> {{ totalExercicios }}
+    </div>
+
+    @if (ultimoTreino) {
+      <div class="stat">
+        <strong>Último treino:</strong> {{ ultimoTreino.data }}
+      </div>
+    }
+  </section>
+
+  <!-- Filtros -->
+  <section class="filtros">
+    <label>Filtrar por tipo:</label>
+
+    <select (change)="onFiltroChange($event)">
+      <option value="">Todos</option>
+
+      @for (t of tipos; track t.nome) {
+        <option [value]="t.nome">{{ t.nome }}</option>
+      }
+    </select>
+  </section>
+
+  <!-- Lista -->
+  <section class="lista">
+
+    @for (t of treinosFiltrados; track t.id) {
+      <div class="card">
+        <header>
+          <h3>{{ t.nome }}</h3>
+        </header>
+
+        <p><strong>Tipo:</strong> {{ t.tipo }}</p>
+        <p><strong>Data:</strong> {{ t.data }}</p>
+
+        <footer>
+          <button [routerLink]="['/treinos/editar', t.id]">Editar</button>
+          <button (click)="apagarTreino(t.id)" class="apagar">Apagar 🗑️</button>
+        </footer>
+      </div>
+    }
+
+    @if (treinosFiltrados.length === 0) {
+      <p class="sem-resultados">Nenhum treino encontrado.</p>
+    }
+  </section>
+
+</div>

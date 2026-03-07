@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Treino } from '../shared/models/treino.model';
 import { BehaviorSubject } from 'rxjs';
+import { Treino } from '../shared/models/treino.model';
 
 type ActualizarExercicio = {
   id?: number;
@@ -14,12 +14,12 @@ type ActualizarExercicio = {
 })
 export class TreinosStore {
 
-  // Agora o store é reativo
+  // Estado reativo
   private treinosSubject = new BehaviorSubject<Treino[]>([]);
   treinos$ = this.treinosSubject.asObservable();
 
-  // Tipos de treino
-  tipos = [
+  // Tipos de treino (readonly para evitar alterações acidentais)
+  readonly tipos = [
     {
       nome: 'Peito e Costas',
       exercicios: [
@@ -60,9 +60,6 @@ export class TreinosStore {
     },
   ];
 
-  // Array interno (opcional, mas mantido para compatibilidade)
-  private treinos: Treino[] = [];
-
   // Retorna os tipos
   getTipos() {
     return this.tipos;
@@ -75,64 +72,57 @@ export class TreinosStore {
 
   // Buscar treino por ID
   getTreinoById(id: number): Treino | undefined {
-    return this.treinosSubject.value.find((t) => t.id === id);
+    return this.treinosSubject.value.find(t => t.id === id);
   }
 
-  // ADICIONAR TREINO (corrigido para emitir atualizações)
+  // Adicionar treino
   addTreino(novoTreino: Treino) {
-    const atual = this.treinosSubject.value;
-    const atualizado = [...atual, novoTreino];
-
-    this.treinosSubject.next(atualizado);
-    this.treinos = atualizado; // mantém compatibilidade
+    this.treinosSubject.next([
+      ...this.treinosSubject.value,
+      novoTreino
+    ]);
   }
 
   // Atualizar data
   updateData(id: number, novaData: string) {
-    const treinos = this.treinosSubject.value.map(t =>
-      t.id === id ? { ...t, data: novaData } : t
+    this.treinosSubject.next(
+      this.treinosSubject.value.map(t =>
+        t.id === id ? { ...t, data: novaData } : t
+      )
     );
-
-    this.treinosSubject.next(treinos);
-    this.treinos = treinos;
   }
 
   // Atualizar exercício
-  actualizarTreino(id: number, idExercicio: number, alteracoesExercicio: ActualizarExercicio) {
-    const treinos = this.treinosSubject.value.map(t => {
-      if (t.id !== id) return t;
-
-      const exerciciosAtualizados = t.exercicios.map(e =>
-        e.id === idExercicio ? { ...e, ...alteracoesExercicio } : e
-      );
-
-      return { ...t, exercicios: exerciciosAtualizados };
-    });
-
-    this.treinosSubject.next(treinos);
-    this.treinos = treinos;
+  actualizarTreino(id: number, idExercicio: number, alteracoes: ActualizarExercicio) {
+    this.treinosSubject.next(
+      this.treinosSubject.value.map(t =>
+        t.id === id
+          ? {
+              ...t,
+              exercicios: t.exercicios.map(e =>
+                e.id === idExercicio ? { ...e, ...alteracoes } : e
+              )
+            }
+          : t
+      )
+    );
   }
 
   // Apagar treino
   deleteTreino(id: number) {
-    const treinos = this.treinosSubject.value.filter(t => t.id !== id);
-
-    this.treinosSubject.next(treinos);
-    this.treinos = treinos;
+    this.treinosSubject.next(
+      this.treinosSubject.value.filter(t => t.id !== id)
+    );
   }
 
-  // Gerar ID
+  // Gerar ID único
   getNextId(): number {
-    const treinos = this.treinosSubject.value;
-    return treinos.length > 0
-      ? Math.max(...treinos.map((t) => t.id)) + 1
-      : 1;
+    const ids = this.treinosSubject.value.map(t => t.id);
+    return ids.length > 0 ? Math.max(...ids) + 1 : 1;
   }
 
+  // Exercícios por tipo
   getExerciciosPorTipo(tipo: string): string[] {
-  if (!tipo) return [];
-  const t = this.tipos.find(x => x.nome === tipo);
-  return t ? t.exercicios : [];
-}
-
+    return this.tipos.find(t => t.nome === tipo)?.exercicios ?? [];
+  }
 }
