@@ -1,43 +1,51 @@
 import { Component } from '@angular/core';
-import { FormGroup, ReactiveFormsModule, FormControl, Validators, FormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  ReactiveFormsModule,
+  FormControl,
+  Validators,
+  FormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { TreinosStore } from '../treinos-store';
 
 @Component({
   selector: 'app-criar',
-  imports: [ReactiveFormsModule, FormsModule, CommonModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   templateUrl: './criar.html',
   styleUrl: './criar.css',
 })
 export class Criar {
-
-  // Formulário principal
   form = new FormGroup({
     data: new FormControl('', [Validators.required]),
     tipo: new FormControl('', [Validators.required]),
   });
 
-  // Exercício selecionado pelo utilizador
   exercicioSelecionado: string = '';
-
-  // Valores que o utilizador vai meter
   carga: number = 0;
   repeticoes: number = 0;
 
-  constructor(private treinosStore: TreinosStore) {}
+  treinos: any[] = [];
+
+  constructor(public treinosStore: TreinosStore) {}
 
   get tipos() {
     return this.treinosStore.tipos;
   }
 
-  // Quando muda o tipo de treino
+  ngOnInit() {
+    this.treinosStore.treinos$.subscribe((t) => {
+      this.treinos = t;
+    });
+  }
+
   onTipoChange() {
     this.exercicioSelecionado = '';
     this.carga = 0;
     this.repeticoes = 0;
   }
 
-  // Quando muda o exercício
   onExercicioChange() {
     this.carga = 0;
     this.repeticoes = 0;
@@ -47,7 +55,7 @@ export class Criar {
     if (this.form.invalid || !this.exercicioSelecionado) return;
 
     const tipoSelecionado = this.form.value.tipo;
-    const tipo = this.treinosStore.tipos.find(t => t.nome === tipoSelecionado);
+    const tipo = this.treinosStore.tipos.find((t) => t.nome === tipoSelecionado);
     if (!tipo) return;
 
     const novoTreino = {
@@ -60,13 +68,17 @@ export class Criar {
           id: 1,
           nome: this.exercicioSelecionado,
           repeticoes: this.repeticoes,
-          peso: this.carga
-        }
-      ]
+          peso: this.carga,
+        },
+      ],
     };
 
     this.treinosStore.addTreino(novoTreino);
+
     this.form.reset();
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+
     this.exercicioSelecionado = '';
     this.carga = 0;
     this.repeticoes = 0;

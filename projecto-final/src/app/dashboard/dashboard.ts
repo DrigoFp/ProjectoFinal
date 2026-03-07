@@ -11,48 +11,65 @@ import { TreinosStore } from '../treinos/treinos-store';
 export class Dashboard {
   dataDeHoje: string = new Date().toLocaleDateString('pt-PT');
   name: string = 'Raquel Machado ❤️';
+
   treinos: any[] = [];
   totalTreinos: number = 0;
   ultimoTreino: any = null;
 
-  // 🔥 VARIÁVEIS CORRETAS
   estatisticasVisiveis: boolean = false;
   estatisticas: any = null;
 
   constructor(private treinosStore: TreinosStore) {}
 
   ngOnInit() {
-    this.treinos = this.treinosStore.getTreinos();
-    this.totalTreinos = this.treinos.length;
-
-    if (this.treinos.length > 0) {
-      this.ultimoTreino = this.treinos[this.treinos.length - 1];
-    }
+    this.treinosStore.treinos$.subscribe(treinos => {
+      this.treinos = treinos;
+      this.totalTreinos = treinos.length;
+      this.ultimoTreino = treinos.length > 0 ? treinos[treinos.length - 1] : null;
+    });
   }
 
-  // 🔥 MÉTODO CORRETO PARA MOSTRAR/ESCONDER ESTATÍSTICAS
   mostrarEstatisticas() {
-    this.estatisticas = this.calcularEstatisticas();
+    this.estatisticas = this.calcularEstatisticasPorTreino();
     this.estatisticasVisiveis = !this.estatisticasVisiveis;
   }
 
-  // 🔥 MÉTODO QUE CALCULA AS ESTATÍSTICAS
-  calcularEstatisticas() {
-    return this.treinos.reduce(
-      (acc, treino) => {
-        acc.maxPeso = Math.max(acc.maxPeso, treino.peso);
-        acc.minPeso = Math.min(acc.minPeso, treino.peso);
-        acc.maxReps = Math.max(acc.maxReps, treino.repeticoes);
-        acc.minReps = Math.min(acc.minReps, treino.repeticoes);
+calcularEstatisticasPorTreino() {
+  const estatisticas: any = {};
 
-        return acc;
-      },
-      {
-        maxPeso: -Infinity,
-        minPeso: Infinity,
-        maxReps: -Infinity,
-        minReps: Infinity,
-      },
-    );
+  for (const treino of this.treinos) {
+    const nomeTreino = treino.nome;
+
+    if (!estatisticas[nomeTreino]) {
+      estatisticas[nomeTreino] = {};
+    }
+
+    for (const ex of treino.exercicios) {
+      const nomeExercicio = ex.nome;
+
+      if (!estatisticas[nomeTreino][nomeExercicio]) {
+        estatisticas[nomeTreino][nomeExercicio] = {
+          maxPeso: ex.peso,
+          maxReps: ex.repeticoes
+        };
+      } else {
+        estatisticas[nomeTreino][nomeExercicio].maxPeso =
+          Math.max(estatisticas[nomeTreino][nomeExercicio].maxPeso, ex.peso);
+
+        estatisticas[nomeTreino][nomeExercicio].maxReps =
+          Math.max(estatisticas[nomeTreino][nomeExercicio].maxReps, ex.repeticoes);
+      }
+    }
   }
+
+  return estatisticas;
+}
+getTreinoKeys(obj: any) {
+  return Object.keys(obj);
+}
+
+getExercicioKeys(obj: any) {
+  return Object.keys(obj);
+}
+
 }
