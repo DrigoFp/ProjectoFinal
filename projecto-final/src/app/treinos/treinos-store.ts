@@ -128,4 +128,11 @@ export class TreinosStore {
       ? Math.max(...treinos.map((t) => t.id)) + 1
       : 1;
   }
+
+  getExerciciosPorTipo(tipo: string): string[] {
+  if (!tipo) return [];
+  const t = this.tipos.find(x => x.nome === tipo);
+  return t ? t.exercicios : [];
+}
+
 }

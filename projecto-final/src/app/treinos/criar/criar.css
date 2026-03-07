@@ -171,3 +171,8 @@ section {
     flex-direction: column;
   }
 }
+.erro {
+  color: #d9534f;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
