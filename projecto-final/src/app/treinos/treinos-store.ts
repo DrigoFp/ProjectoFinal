@@ -15,11 +15,11 @@ type ActualizarExercicio = {
 })
 export class TreinosStore {
 
-  // Estado reativo
-  private treinosSubject = new BehaviorSubject<Treino[]>([]);
-  treinos$ = this.treinosSubject.asObservable();
+  // Estado reativo - Guarda o estado "treinosSubject"
+  private treinosSubject = new BehaviorSubject<Treino[]>([]); // estado global da aplicação, começa vazio o array. treinos$ → é o observable que os componentes observam
+  treinos$ = this.treinosSubject.asObservable(); // Os componentes não podem alterar o estado diretamente, so podem observar
 
-  // Getter para aceder ao array atual de treinos
+  // Getter para aceder ao array atual de treinos/ Sempre que o valor muda, todos os componentes que estão a observar recebem a atualização.
   private get treinos(): Treino[] {
     return this.treinosSubject.value;
   }
@@ -66,10 +66,10 @@ export class TreinosStore {
     },
   ];
 
-  constructor(private storage: TreinosStorageService) {
-    const dadosGuardados = this.storage.loadTreinos();
+  constructor(private storage: TreinosStorageService) { 
+    const dadosGuardados = this.storage.loadTreinos(); // Vai ao LocalStorage buscar treinos guardados
     if (dadosGuardados.length > 0) {
-      this.treinosSubject.next(dadosGuardados);
+      this.treinosSubject.next(dadosGuardados); // Se existirem, coloca-os dentro do BehaviorSubject
     }
   }
 
@@ -91,8 +91,8 @@ export class TreinosStore {
   // Adicionar treino
   addTreino(treino: Treino) {
     const atual = [...this.treinos, treino];
-    this.treinosSubject.next(atual);
-    this.storage.saveTreinos(atual);
+    this.treinosSubject.next(atual); // Atualizar o valor do BehaviorSubject
+    this.storage.saveTreinos(atual); // Guarda no LocalStorage
   }
 
   // Atualizar data
@@ -100,8 +100,8 @@ export class TreinosStore {
     const atual = this.treinos.map((t) =>
       t.id === id ? { ...t, data: novaData } : t
     );
-    this.treinosSubject.next(atual);
-    this.storage.saveTreinos(atual);
+    this.treinosSubject.next(atual);// Atualizar o valor do BehaviorSubject
+    this.storage.saveTreinos(atual);// Guarda no LocalStorage
   }
 
   // Atualizar exercício
@@ -117,8 +117,8 @@ export class TreinosStore {
         : t
     );
 
-    this.treinosSubject.next(atual);
-    this.storage.saveTreinos(atual);
+    this.treinosSubject.next(atual);// Atualizar o valor do BehaviorSubject
+    this.storage.saveTreinos(atual); // Guarda no LocalStorage
   }
 
   // Atualizar treino completo
@@ -126,15 +126,15 @@ export class TreinosStore {
     const atual = this.treinos.map((t) =>
       t.id === id ? treinoAtualizado : t
     );
-    this.treinosSubject.next(atual);
-    this.storage.saveTreinos(atual);
+    this.treinosSubject.next(atual);// Atualizar o valor do BehaviorSubject
+    this.storage.saveTreinos(atual);// Guarda no LocalStorage
   }
 
   // Apagar treino
   deleteTreino(id: number) {
     const atual = this.treinos.filter((t) => t.id !== id);
-    this.treinosSubject.next(atual);
-    this.storage.saveTreinos(atual);
+    this.treinosSubject.next(atual);// Atualizar o valor do BehaviorSubject
+    this.storage.saveTreinos(atual);// Guarda no LocalStorage
   }
 
   // Gerar ID único

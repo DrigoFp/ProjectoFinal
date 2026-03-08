@@ -10,12 +10,12 @@ export const routes: Routes = [
     {path: 'dashboard', component: Dashboard},
     {path: 'lista', component: Lista},
     {path: 'criar', component: Criar},
-    {path: 'treinos/editar/:id', component: Editar},
+    {path: 'treinos/editar/:id', component: Editar}, // :id significa que não é um valor fixo, muda conforme o treino e angular le o valor da URL
     
 {
   path: 'treinos/:id',
   loadComponent: () =>
-    import('./treinos/detalhe/detalhe').then(m => m.DetalheTreinoComponent)
+    import('./treinos/detalhe/detalhe').then(m => m.DetalheTreinoComponent) // lazy loading, carrega o componente DetalheTreinoComponent só quando necessário
 }
 
 ];

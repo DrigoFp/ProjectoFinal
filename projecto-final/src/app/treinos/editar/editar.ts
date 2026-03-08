@@ -16,7 +16,7 @@ export class Editar implements OnInit {
   mensagem: string = '';
 
   constructor(
-    private route: ActivatedRoute,
+    private route: ActivatedRoute, // Permite ler parâmetros da rota.
     private treinosStore: TreinosStore,
   ) {}
 
@@ -29,8 +29,8 @@ export class Editar implements OnInit {
   }
   
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.treino = this.treinosStore.getTreinoById(id);
+    const id = Number(this.route.snapshot.paramMap.get('id')); //  devolve o ID que está na URL
+    this.treino = this.treinosStore.getTreinoById(id); // Vai ao TreinosStore buscar o treino correspondente
   }
 
   guardarData() {

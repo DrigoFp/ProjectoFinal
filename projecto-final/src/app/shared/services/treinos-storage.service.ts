@@ -9,8 +9,8 @@ export class TreinosStorageService {
 
   private readonly STORAGE_KEY = 'treinos';
 
-  loadTreinos(): Treino[] {
-    const data = localStorage.getItem(this.STORAGE_KEY);
+  loadTreinos(): Treino[] { // vai buscar os dados guardados ao LocalStorage, se sim transforma a string em array com JSON.parse, se não devolve array vazio 
+    const data = localStorage.getItem(this.STORAGE_KEY); //STORAGE_KEY a chave onde guardo os dados
     return data ? JSON.parse(data) : [];
   }
 
